@@ -2,14 +2,26 @@
 using namespace std;
 
 int main()
-{
-    int arr[5][5] = {{1,2,3,4,5},{6,7,8,9,10},{11,12,13,14,15},{16,17,18,19,20},{21,22,23,24,25}};
-    int transpose=0;
-    for(int i=0;i<5;i++)
-    {
-        transpose += arr[i][i];
-    }
-    cout<<transpose<<endl;
+{cout<<"Enter number of rows in matrix:";
+    int rows;cin>>rows;
+    cout<<"Enter number of columns in matrix:";
+    int columns;cin>>columns;
+    int arr[rows][columns];
+     cout<<"enter elements of matrix (row-wise)"<<endl;;
+    for(int i=0;i<rows;i++)
+        for(int j=0;j<columns;j++)
+            cin>>arr[i][j];
 
+    int arrt[columns][rows];
+    for(int i=0;i<columns;i++)
+        for(int j=0;j<rows;j++)
+            arrt[i][j]=arr[j][i];
+    cout<<"transpose matrix is:"<<endl;
+    for(int i=0;i<columns;i++)
+    {
+        for(int j=0;j<rows;j++)
+            cout<<arrt[i][j]<<" ";
+        cout<<endl;
+    }
     return 0;
 }
