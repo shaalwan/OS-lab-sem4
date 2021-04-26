@@ -30,6 +30,23 @@ class FSFC
     {
         this->Jobs =p;
     }
+
+    void arrange(int num)
+    {
+        int i,j;
+        for(i=0;i<num;++i)
+        {
+            for(j=i+1;j<num;++j)
+            {
+                if(Jobs[i].get_arrival()>Jobs[j].get_arrival())
+                {
+                    Process temp = Jobs[i];
+                    Jobs[i]=Jobs[j];
+                    Jobs[j]=temp;
+                }
+            }
+        }
+    }
     
     int add_jobs()
     {       
@@ -44,21 +61,7 @@ class FSFC
                 Process p(arrival_time,burst_time);
                 Jobs.push_back(p);
             }
-
-        for(int i=0;i<n;++i)
-        {
-            for(int j=i+1;i<n;++j)
-            {    
-                if(Jobs[i].get_arrival()>Jobs[j].get_arrival())
-                {
-                    cout<<n;
-                    // Process temp = Jobs[i];
-                    // Jobs[i]=Jobs[j];
-                    // Jobs[j]=temp;
-                }
-            }
-        //cout<<Jobs[i].arrival_time<<" "<<Jobs[i].burst_time;
-        }
+        arrange(n);
         return n;
     }
 
@@ -71,7 +74,6 @@ class FSFC
             if(Jobs[i].response_time<Jobs[i].arrival_time)
                 Jobs[i].response_time = Jobs[i].arrival_time;
         }
-        cout<<"response";
     }
 
     void get_waiting(int n)
@@ -89,11 +91,11 @@ class FSFC
 
     void get_avg(int n)
     {
-        int avg_waiting_time=0;
+        float avg_waiting_time=0;
         for(int i=0;i<n;i++)
             avg_waiting_time += Jobs[i].waiting_time;
         avg_waiting_time = avg_waiting_time/Jobs.size();
-        cout<<"Average waiting time for all processes is:"<<avg_waiting_time<<endl;;
+        cout<<"\n Average waiting time for all processes is:"<<avg_waiting_time<<endl;;
     }
 };
 
@@ -111,7 +113,7 @@ int main()
     cout<<"Processes "<<"  Burst time  "<<" Waiting time  "<<" Turn around time\n";
     for (int i=0;i<n;i++)
     {
-    cout<<"\n   "<<i+1<<"\t\t"<<A.Jobs[i].burst_time<<"\t     "<<A.Jobs[i].waiting_time<<"\t\t      "<<A.Jobs[i].turnaround_time;
+    cout<<"\n   "<<"\t\t"<<A.Jobs[i].burst_time<<"\t     "<<A.Jobs[i].waiting_time<<"\t\t      "<<A.Jobs[i].turnaround_time;
     }
 
     A.get_avg(n);
