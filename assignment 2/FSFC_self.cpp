@@ -5,13 +5,15 @@ using namespace std;
 class Process
 {
     public:
+    int pid;
     int arrival_time=0;
     int burst_time=0;
     int response_time=0;
     int waiting_time=0;
     int turnaround_time=0;
-    Process(int arrival_time,int burst_time)
+    Process(int id,int arrival_time,int burst_time)
     {
+        this->pid = id;
         this->arrival_time=arrival_time;
         this->burst_time = burst_time;
     }
@@ -58,7 +60,7 @@ class FSFC
                 int arrival_time;cin>>arrival_time;
                 cout<<endl<<"enter burst time of job "<<i+1<<":";
                 int burst_time;cin>>burst_time;
-                Process p(arrival_time,burst_time);
+                Process p(i+1,arrival_time,burst_time);
                 Jobs.push_back(p);
             }
         arrange(n);
@@ -86,7 +88,7 @@ class FSFC
     void get_turnround(int n)
     {
         for(int i=1;i<n;i++)
-            Jobs[i].waiting_time =  Jobs[i].waiting_time+Jobs[i].burst_time;
+            Jobs[i].turnaround_time =  Jobs[i].waiting_time+Jobs[i].burst_time;
     }
 
     void get_avg(int n)
@@ -110,10 +112,10 @@ int main()
     A.get_response(n);
     A.get_waiting(n);
     A.get_turnround(n);
-    cout<<"Processes "<<"  Burst time  "<<" Waiting time  "<<" Turn around time\n";
+    cout<<"Processes "<<"  Arrival time   "<<"  Burst time  "<<" Waiting time  "<<" Turn around time\n";
     for (int i=0;i<n;i++)
     {
-    cout<<"\n   "<<"\t\t"<<A.Jobs[i].burst_time<<"\t     "<<A.Jobs[i].waiting_time<<"\t\t      "<<A.Jobs[i].turnaround_time;
+    cout<<"\t"<<A.Jobs[i].pid<<"\t     "<<A.Jobs[i].arrival_time<<"\t\t      "<<A.Jobs[i].burst_time<<"\t     "<<A.Jobs[i].waiting_time<<"\t\t      "<<A.Jobs[i].turnaround_time<<"\n";
     }
 
     A.get_avg(n);
